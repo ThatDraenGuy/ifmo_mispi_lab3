@@ -14,6 +14,8 @@
 
     <target name="prepare">
         <mkdir dir="${classes.build.dir}" />
+        <mkdir dir="${test.build.dir}" />
+        <mkdir dir="${test.reports.dir}" />
         <mkdir dir="${webapp.build.dir}" />
         <mkdir dir="${md5.checksum.dir}" />
         <mkdir dir="${sha1.checksum.dir}" />
@@ -48,6 +50,27 @@
                 <attribute name="Implementation-Version" value="${app.version}" />
             </manifest>
         </war>
+    </target>
+
+    <target name="test" depends="build">
+        <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+            <classpath>
+                <pathelement path="${classes.build.dir}" />
+                <path refid="ivy.path" />
+            </classpath>
+        </javac>
+
+        <junitlauncher printsummary="yes" haltonfailure="yes">
+            <classpath>
+                <pathelement location="${classes.build.dir}" />
+                <pathelement location="${test.build.dir}" />
+                <path refid="ivy.path" />
+            </classpath>
+            <testclasses outputdir="${test.reports.dir}">
+                <fileset dir="${test.build.dir}" />
+                <listener type="legacy-brief" sendSysOut="true" />
+            </testclasses>
+        </junitlauncher>
     </target>
 
     <target name="doc" depends="prepare">

@@ -1,13 +1,11 @@
 <ivy-module version="2.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:maven="https://maven.apache.org/xsd/maven-4.0.0.xsd"
-        xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
-    <info organisation="" module="ant-project"/>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:maven="https://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="" module="ant-project" />
 
     <dependencies>
-        <dependency org="junit" name="junit" rev="4.11"/>
-        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.8.1" />
-        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.8.1" />
+        <dependency org="org.apache.ant" name="ant-junitlauncher" rev="1.10.13" />
 
         <dependency org="org.projectlombok" name="lombok" rev="1.18.24" />
 
@@ -18,15 +16,16 @@
         <dependency org="jakarta.persistence" name="jakarta.persistence-api" rev="3.1.0" />
 
         <dependency org="org.primefaces" name="primefaces" rev="12.0.0">
-            <artifact name="primefaces" maven:classifier="jakarta" type="jar" ext="jar"/>
+            <artifact name="primefaces" maven:classifier="jakarta" type="jar" ext="jar" />
         </dependency>
 
         <dependency org="org.postgresql" name="postgresql" rev="42.5.0" />
-        <dependency org="org.hibernate.orm" name="hibernate-core" rev="6.1.4.Final"/>
+        <dependency org="org.hibernate.orm" name="hibernate-core" rev="6.1.4.Final" />
 
         <dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.13.4" />
         <dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.13.4" />
         <dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.13.4" />
-        <dependency org="com.fasterxml.jackson.module" name="jackson-module-parameter-names" rev="2.13.4" />
+        <dependency org="com.fasterxml.jackson.module" name="jackson-module-parameter-names"
+            rev="2.13.4" />
     </dependencies>
 </ivy-module>
