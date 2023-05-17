@@ -20,6 +20,7 @@
         <mkdir dir="${md5.checksum.dir}" />
         <mkdir dir="${sha1.checksum.dir}" />
         <mkdir dir="${result.checksum.dir}" />
+        <mkdir dir="${docs.dir}" />
         <mkdir dir="${war.build.dir}" />
         <touch file="${manifest.file}" mkdirs="true" />
     </target>
@@ -75,14 +76,14 @@
         </junitlauncher>
     </target>
 
-    <target name="doc" depends="prepare">
+    <target name="doc" depends="resolve, prepare">
         <checksum toDir="${md5.checksum.dir}">
             <fileset dir="${main.src.dir}" />
         </checksum>
         <concat destfile="${result.checksum.dir}/DIGEST.md5sum">
             <fileset dir="${md5.checksum.dir}" />
         </concat>
-        <loadfile property="md5.checksum" srcfile="${result.checksum.dir}/DIGEST.md5sum" />
+        <checksum file="${result.checksum.dir}/DIGEST.md5sum" property="md5.checksum" />
 
         <checksum toDir="${sha1.checksum.dir}" algorithm="SHA-1">
             <fileset dir="${main.src.dir}" />
@@ -90,13 +91,19 @@
         <concat destfile="${result.checksum.dir}/DIGEST.sha1sum">
             <fileset dir="${sha1.checksum.dir}" />
         </concat>
-        <loadfile property="sha1.checksum" srcfile="${result.checksum.dir}/DIGEST.sha1sum" />
+        <checksum file="${result.checksum.dir}/DIGEST.sha1sum" property="sha1.checksum" />
 
         <manifest file="${manifest.file}" mode="update">
             <attribute name="Checksum-MD5" value="${md5.checksum}" />
             <attribute name="Checksum-SHA-1" value="${sha1.checksum}" />
         </manifest>
 
+        <javadoc sourcepath="${main.src.dir}" destdir="${docs.dir}" author="true" version="true"
+            use="true">
+            <classpath>
+                <path refid="ivy.path" />
+            </classpath>
+        </javadoc>
     </target>
 
     <target name="env">
