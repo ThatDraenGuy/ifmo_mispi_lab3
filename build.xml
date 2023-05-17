@@ -34,7 +34,9 @@
     </target>
 
     <target name="compile" depends="resolve, prepare">
-        <javac srcdir="${main.src.dir}" sourcepath="" destdir="${classes.build.dir}" target="17"
+        <javac srcdir="${main.src.dir}" sourcepath="" destdir="${classes.build.dir}"
+            source="${javac.source.version}"
+            target="${javac.target.version}" fork="true" executable="${javac}"
             includeantruntime="false">
             <classpath>
                 <path refid="ivy.path" />
@@ -95,5 +97,18 @@
             <attribute name="Checksum-SHA-1" value="${sha1.checksum}" />
         </manifest>
 
+    </target>
+
+    <target name="env">
+        <antcall target="build">
+            <param name="javac" value="${javac.20}" />
+            <param name="javac.source.version" value="20" />
+            <param name="javac.target.version" value="20" />
+        </antcall>
+        <copy file="${war}" toDir="${container.deployments.dir}" />
+        <exec dir="${container.dir}" executable="${container.executable}">
+            <env key="JAVA_HOME" path="${JAVA_HOME.20}" />
+            <env key="JAVA_OPTS" value="${container.JVM.options}" />
+        </exec>
     </target>
 </project>
