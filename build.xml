@@ -108,7 +108,7 @@
         </javadoc>
     </target>
 
-    <target name="env">
+    <target name="env" depends="prepare">
         <antcall target="build">
             <param name="javac" value="${javac.20}" />
             <param name="javac.source.version" value="20" />
