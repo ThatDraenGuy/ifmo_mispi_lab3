@@ -45,7 +45,7 @@
         </javac>
     </target>
 
-    <target name="build" depends="compile, resources">
+    <target name="build" depends="compile, resources, checksums">
         <war destfile="${war.build.dir}/${war.name}" basedir="${webapp.build.dir}">
             <classes dir="${classes.build.dir}" />
             <lib dir="${lib.dir}" />
@@ -78,7 +78,8 @@
         </junitlauncher>
     </target>
 
-    <target name="doc" depends="resolve, prepare">
+
+    <target name="checksums" depends="prepare">
         <checksum toDir="${md5.checksum.dir}">
             <fileset dir="${main.src.dir}" />
         </checksum>
@@ -99,13 +100,20 @@
             <attribute name="Checksum-MD5" value="${md5.checksum}" />
             <attribute name="Checksum-SHA-1" value="${sha1.checksum}" />
         </manifest>
+    </target>
 
+    <target name="javadoc" depends="prepare, resolve">
         <javadoc sourcepath="${main.src.dir}" destdir="${docs.dir}" author="true" version="true"
             use="true">
             <classpath>
                 <path refid="ivy.path" />
             </classpath>
         </javadoc>
+    </target>
+
+    <target name="doc" depends="resolve, prepare">
+        <antcall target="checksums" />
+        <antcall target="javadoc" />
     </target>
 
     <target name="env" depends="prepare">
